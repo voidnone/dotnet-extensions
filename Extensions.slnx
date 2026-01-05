@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/Logging.CoreSample/Logging.CoreSample.csproj" />
+    <Project Path="samples/Logging.FileSample/Logging.FileSample.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Logging.Core/Logging.Core.csproj" />
+    <Project Path="src/Logging.File/Logging.File.csproj" />
+    <Project Path="src/Logging.Sqlite/Logging.Sqlite.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DependencyInjectionTest/DependencyInjectionTest.csproj" />
+  </Folder>
+</Solution>

@@ -4,6 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<AssemblyName>Huanent.Logging.Core</AssemblyName>
 		<RootNamespace>Huanent.Logging.Core</RootNamespace>
+		<Nullable>enable</Nullable>
 		<Authors>Huanent</Authors>
 		<PackageProjectUrl>https://github.com/huanent/Logging</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/huanent/Logging.git</RepositoryUrl>

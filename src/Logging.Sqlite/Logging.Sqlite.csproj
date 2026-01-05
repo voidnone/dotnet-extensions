@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<AssemblyName>Huanent.Logging.Sqlite</AssemblyName>
+		<RootNamespace>Huanent.Logging.Sqlite</RootNamespace>
+		<Nullable>enable</Nullable>
+		<Authors>Huanent</Authors>
+		<PackageProjectUrl>https://github.com/huanent/Logging</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/huanent/Logging.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>Logging Sqlite</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>1.0.0</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Logging.Core\Logging.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.8" />
+	</ItemGroup>
+
+</Project>

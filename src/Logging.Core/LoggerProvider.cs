@@ -6,10 +6,10 @@ namespace Huanent.Logging.Core
     [ProviderAlias("Implementation")]
     public class LoggerProvider(ILogWriter loggerWriter) : ILoggerProvider
     {
-        private readonly Func<string, LogLevel, bool> filter;
-        private readonly ILogWriter _loggerWriter = loggerWriter;
+        private readonly Func<string, LogLevel, bool>? filter;
+        private readonly ILogWriter loggerWriter = loggerWriter;
 
-        public LoggerProvider(Func<string, LogLevel, bool> filter, ILogWriter loggerWriter)
+        public LoggerProvider(Func<string, LogLevel, bool>? filter, ILogWriter loggerWriter)
             : this(loggerWriter)
         {
             this.filter = filter;
@@ -17,12 +17,12 @@ namespace Huanent.Logging.Core
 
         public ILogger CreateLogger(string name)
         {
-            return new Logger(name, filter, _loggerWriter);
+            return new Logger(name, filter, loggerWriter);
         }
 
         public void Dispose()
         {
-            if (_loggerWriter is IDisposable disposable)
+            if (loggerWriter is IDisposable disposable)
             {
                 disposable.Dispose();
             }

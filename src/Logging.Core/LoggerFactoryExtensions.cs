@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.Logging;
+
 public static class LoggerFactoryExtensions
 {
     public static ILoggingBuilder AddImplementation<T>(this ILoggingBuilder builder) where T : class, ILogWriter

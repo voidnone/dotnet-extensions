@@ -2,8 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<AssemblyName>Huanent.$(MSBuildProjectName)</AssemblyName>
-		<RootNamespace>Huanent.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<AssemblyName>Huanent.Logging.File</AssemblyName>
+		<RootNamespace>Huanent.Logging.File</RootNamespace>
+		<Nullable>enable</Nullable>
 		<Authors>Huanent</Authors>
 		<PackageProjectUrl>https://github.com/huanent/Logging</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

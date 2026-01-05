@@ -2,21 +2,23 @@
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Huanent.Logging.File;
+namespace Huanent.Logging.Sqlite;
 
-public class FileLogWriter : ILogWriter
+public class SqliteLogWriter : ILogWriter
 {
-    private readonly FileLoggerOptions options;
+    private readonly SqliteLoggerOptions options;
     private readonly string prefixPath;
     private readonly static ConcurrentQueue<Log> queue = new();
     private static uint writing = 0;
+    private static SqliteDatabase database;
 
-    public FileLogWriter(IOptions<FileLoggerOptions> options)
+    public SqliteLogWriter(IOptions<SqliteLoggerOptions> options)
     {
         this.options = options.Value;
         prefixPath = Path.Combine(AppContext.BaseDirectory, this.options.Path);
@@ -34,25 +36,31 @@ public class FileLogWriter : ILogWriter
 
     private async Task WriteLogAsync()
     {
+        var list = new List<Log>();
+
         while (queue.TryDequeue(out var log))
         {
-            var logBuilder = new StringBuilder();
-            var splitter = $"[{log.Level}] [{log.Name}] [{log.EventId}] [{DateTimeOffset.UtcNow}]";
-            logBuilder.AppendLine(splitter);
-            logBuilder.AppendLine(log.Message);
-            if (log.Exception != default) logBuilder.AppendLine(log.Exception.ToString());
-            logBuilder.AppendLine();
-            var path = GetFilePath(log.CreationTime);
-            await System.IO.File.AppendAllTextAsync(path, logBuilder.ToString());
+            list.Add(log);
+            if (list.Count > 10)
+            {
+                await database.AddLogAsync(list);
+                list.Clear();
+            }
+        }
+
+        if (list.Count > 0)
+        {
+            await database.AddLogAsync(list);
         }
 
         Interlocked.Exchange(ref writing, 0);
     }
 
-    private string GetFilePath(DateTimeOffset creationTime)
+    private SqliteDatabase GetDatabase(DateTimeOffset creationTime)
     {
-        var fileName = $"{creationTime.ToString(options.DateFormat)}.txt";
+        var fileName = $"{creationTime.ToString(options.DateFormat)}.db";
         var path = Path.Combine(prefixPath, fileName);
+        if (database?.Path == path) return database;
         var directory = Path.GetDirectoryName(path);
 
         if (!Directory.Exists(directory))
@@ -60,7 +68,7 @@ public class FileLogWriter : ILogWriter
             Directory.CreateDirectory(directory!);
         }
 
-        return path;
+        return new SqliteDatabase(path);
     }
 }
 
