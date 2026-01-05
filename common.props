@@ -1,0 +1,15 @@
+<Project>
+    <PropertyGroup>
+        <TargetFrameworks>net6.0;net8.0;net10.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <Authors>huanent</Authors>
+        <AssemblyName>VoidNone.$(MSBuildProjectName)</AssemblyName>
+        <RootNamespace>VoidNone.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+        <RepositoryType>git</RepositoryType>
+        <PackageProjectUrl>https://github.com/voidnone/dotnet-extensions</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/voidnone/dotnet-extensions.git</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+</Project>

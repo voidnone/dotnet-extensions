@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\DependencyInjection.csproj" />
+    <ProjectReference Include="../../src/DependencyInjection/DependencyInjection.csproj" />
   </ItemGroup>
 
 </Project>

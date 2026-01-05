@@ -1,29 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+	<Import Project="../../common.props" />
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<AssemblyName>Huanent.Logging.Core</AssemblyName>
-		<RootNamespace>Huanent.Logging.Core</RootNamespace>
-		<Nullable>enable</Nullable>
-		<Authors>Huanent</Authors>
-		<PackageProjectUrl>https://github.com/huanent/Logging</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/huanent/Logging.git</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageTags>Logging</PackageTags>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Version>1.1.0</Version>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Include="..\..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath></PackagePath>
-	  </None>
+		<None Include="../../LICENSE.txt" Pack="true" PackagePath="/" />
+		<None Include="../../README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
-
 </Project>

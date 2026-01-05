@@ -4,9 +4,9 @@ namespace Logging.CoreSample
 {
     public class CustomLogWriter : ILogWriter
     {
-        public void WriteLog(LogLevel level, string message, string name, Exception exception, EventId eventId)
+        public void WriteLog(Log log)
         {
-            Console.WriteLine($"{level} {message} {name} {exception} {eventId}");
+           Console.WriteLine($"{log.Level} {log.Message} {log.Name} {log.Exception} {log.EventId}");
         }
     }
 }

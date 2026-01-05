@@ -1,22 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../common.props" />
+	
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
-		<Nullable>enable</Nullable>
-		<RepositoryType>git</RepositoryType>
-		<PackageProjectUrl>https://github.com/huanent/DependencyInjection</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/huanent/DependencyInjection.git</RepositoryUrl>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Version>3.1.1</Version>
-		<AssemblyName>Huanent.$(MSBuildProjectName)</AssemblyName>
-		<RootNamespace>Huanent.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Authors>huanent</Authors>
-		<PackageTags>DependencyInjection</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="../LICENSE.txt" Pack="true" PackagePath="/" />
-		<None Include="../README.md" Pack="true" PackagePath="/" />
+		<None Include="../../LICENSE.txt" Pack="true" PackagePath="/" />
+		<None Include="../../README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
 	<ItemGroup>

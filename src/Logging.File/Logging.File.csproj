@@ -1,25 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+	<Import Project="../../common.props" />
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<AssemblyName>Huanent.Logging.File</AssemblyName>
-		<RootNamespace>Huanent.Logging.File</RootNamespace>
-		<Nullable>enable</Nullable>
-		<Authors>Huanent</Authors>
-		<PackageProjectUrl>https://github.com/huanent/Logging</PackageProjectUrl>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<RepositoryUrl>https://github.com/huanent/Logging.git</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageTags>Logging File</PackageTags>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Version>4.0.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\README.md">
-			<Pack>True</Pack>
-			<PackagePath></PackagePath>
-		</None>
+		<None Include="../../LICENSE.txt" Pack="true" PackagePath="/" />
+		<None Include="../../README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
 	<ItemGroup>
