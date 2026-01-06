@@ -1,12 +1,12 @@
-﻿using Huanent.Logging.Core;
+﻿using VoidNone.Logging.Core;
 
-namespace Logging.CoreSample
+namespace Logging.CoreSample;
+
+public class CustomLogWriter : ILogWriter
 {
-    public class CustomLogWriter : ILogWriter
+    public void WriteLog(Log log)
     {
-        public void WriteLog(Log log)
-        {
-           Console.WriteLine($"{log.Level} {log.Message} {log.Name} {log.Exception} {log.EventId}");
-        }
+        Console.WriteLine($"{log.Level} {log.Message} {log.Name} {log.Exception} {log.EventId}");
     }
 }
+

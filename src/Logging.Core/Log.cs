@@ -1,7 +1,6 @@
-using System;
 using Microsoft.Extensions.Logging;
 
-namespace Huanent.Logging.Core;
+namespace VoidNone.Logging.Core;
 
 public class Log(LogLevel level, string name, EventId eventId, string message, Exception? exception)
 {

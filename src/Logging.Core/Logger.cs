@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
 
-namespace Huanent.Logging.Core;
+namespace VoidNone.Logging.Core;
 
 public class Logger(string name, Func<string, LogLevel, bool>? filter, ILogWriter loggerWriter) : ILogger
 {

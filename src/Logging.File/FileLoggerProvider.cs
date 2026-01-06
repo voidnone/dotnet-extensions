@@ -1,7 +1,7 @@
-﻿using Huanent.Logging.Core;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using VoidNone.Logging.Core;
 
-namespace Huanent.Logging.File;
+namespace VoidNone.Logging.File;
 
 [ProviderAlias("File")]
 public class FileLoggerProvider(ILogWriter loggerWriter) : LoggerProvider(loggerWriter)

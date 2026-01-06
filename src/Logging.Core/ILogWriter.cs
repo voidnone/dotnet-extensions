@@ -1,4 +1,4 @@
-﻿namespace Huanent.Logging.Core;
+﻿namespace VoidNone.Logging.Core;
 
 public interface ILogWriter
 {

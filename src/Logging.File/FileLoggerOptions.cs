@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Huanent.Logging.File;
+﻿namespace VoidNone.Logging.File;
 
 public class FileLoggerOptions
 {

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
+builder.WebHost.ConfigureKestrel(options => options.ListenAnyIP(8080));
 
 //Use File logWriter
 builder.Logging.AddFile(options =>

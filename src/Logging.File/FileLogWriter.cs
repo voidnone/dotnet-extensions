@@ -1,13 +1,9 @@
-﻿using Huanent.Logging.Core;
-using Microsoft.Extensions.Options;
-using System;
+﻿using Microsoft.Extensions.Options;
 using System.Collections.Concurrent;
-using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using VoidNone.Logging.Core;
 
-namespace Huanent.Logging.File;
+namespace VoidNone.Logging.File;
 
 public class FileLogWriter : ILogWriter
 {

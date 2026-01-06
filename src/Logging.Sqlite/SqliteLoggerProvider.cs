@@ -1,7 +1,7 @@
-﻿using Huanent.Logging.Core;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using VoidNone.Logging.Core;
 
-namespace Huanent.Logging.Sqlite;
+namespace VoidNone.Logging.Sqlite;
 
 [ProviderAlias("Sqlite")]
 public class SqliteLoggerProvider(ILogWriter loggerWriter) : LoggerProvider(loggerWriter)

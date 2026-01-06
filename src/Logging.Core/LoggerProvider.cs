@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
 
-namespace Huanent.Logging.Core
+namespace VoidNone.Logging.Core
 {
     [ProviderAlias("Implementation")]
     public class LoggerProvider(ILogWriter loggerWriter) : ILoggerProvider

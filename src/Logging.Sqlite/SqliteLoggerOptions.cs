@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Huanent.Logging.Sqlite;
+namespace VoidNone.Logging.Sqlite;
 
 public class SqliteLoggerOptions
 {

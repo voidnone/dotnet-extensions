@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Huanent.Logging.Core;
+using Huanent.Logging.Sqlite;
 using Microsoft.Data.Sqlite;
+using VoidNone.Logging.Core;
 
-namespace Huanent.Logging.Sqlite;
+namespace VoidNone.Logging.Sqlite;
 
 public class SqliteDatabase : IDisposable
 {

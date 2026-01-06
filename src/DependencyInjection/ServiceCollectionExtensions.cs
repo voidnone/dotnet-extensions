@@ -8,8 +8,8 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddFromAssemblies(this IServiceCollection services, params Assembly[] assemblies)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
-        if (assemblies == null) throw new ArgumentNullException(nameof(assemblies));
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(assemblies);
 
         var types = assemblies.SelectMany(s => s.GetTypes()).Distinct().ToArray();
 

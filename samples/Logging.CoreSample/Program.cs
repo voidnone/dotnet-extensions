@@ -2,9 +2,11 @@ using Logging.CoreSample;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Logging.ClearProviders();
 
-//Use custom logWriter
+builder.Logging.ClearProviders();
+builder.WebHost.ConfigureKestrel(options => options.ListenAnyIP(8080));
+
+// Use Custom logWriter
 builder.Logging.AddImplementation<CustomLogWriter>();
 
 var app = builder.Build();

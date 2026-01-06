@@ -1,8 +1,9 @@
-﻿using Huanent.Logging.Core;
-using Huanent.Logging.Sqlite;
+﻿using Huanent.Logging.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
+using VoidNone.Logging.Core;
+using VoidNone.Logging.Sqlite;
 
 namespace Microsoft.Extensions.Logging;
 

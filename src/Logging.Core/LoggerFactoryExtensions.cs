@@ -1,6 +1,6 @@
-﻿using Huanent.Logging.Core;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using VoidNone.Logging.Core;
 
 namespace Microsoft.Extensions.Logging;
 

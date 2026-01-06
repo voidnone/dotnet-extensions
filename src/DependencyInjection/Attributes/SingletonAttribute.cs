@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Microsoft.Extensions.DependencyInjection;
+﻿namespace Microsoft.Extensions.DependencyInjection;
 
 public class SingletonAttribute : LifetimeAttribute
 {
