@@ -2,11 +2,13 @@
 	<Import Project="../../common.props" />
 
 	<PropertyGroup>
-		<Version>3.1.1</Version>
+		<Version>3.1.2</Version>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="../../LICENSE.txt" Pack="true" PackagePath="/" />
+		<None Include="../../icon.png" Pack="true" PackagePath="/" Visible="false" />
 		<None Include="./README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 

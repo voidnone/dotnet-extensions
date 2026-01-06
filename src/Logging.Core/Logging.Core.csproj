@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="../../common.props" />
 	<PropertyGroup>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="../../LICENSE.txt" Pack="true" PackagePath="/" />
+		<None Include="../../icon.png" Pack="true" PackagePath="/" Visible="false" />
 		<None Include="./README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 

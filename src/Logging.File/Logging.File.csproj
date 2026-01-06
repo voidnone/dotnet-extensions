@@ -2,16 +2,18 @@
 
 	<Import Project="../../common.props" />
 	<PropertyGroup>
-		<Version>4.0.1</Version>
+		<Version>4.0.2</Version>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="../../LICENSE.txt" Pack="true" PackagePath="/" />
+		<None Include="../../icon.png" Pack="true" PackagePath="/" Visible="false" />
 		<None Include="../../README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Logging.Core\Logging.Core.csproj" />
+		<ProjectReference Include="..\Logging.Core\Logging.Core.csproj" />
 	</ItemGroup>
 
 </Project>
