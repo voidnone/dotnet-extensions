@@ -3,6 +3,10 @@
 
 name: .NET
 
+on:
+  push:
+    branches:
+      - master
 jobs:
   build:
 
