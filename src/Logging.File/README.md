@@ -1,5 +1,7 @@
 # VoidNone.Logging.File
+
 ## Install
+
 [![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.File?label=nuget&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.File/)
 
 
