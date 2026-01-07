@@ -6,7 +6,7 @@ name: .NET
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build:
 
