@@ -6,6 +6,12 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// Automatically register services from the provided assemblies.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="assemblies"></param>
+    /// <returns></returns>
     public static IServiceCollection AddFromAssemblies(this IServiceCollection services, params Assembly[] assemblies)
     {
         ArgumentNullException.ThrowIfNull(services);
