@@ -2,7 +2,7 @@
 
 	<Import Project="../../common.props" />
 	<PropertyGroup>
-		<Version>4.0.2</Version>
+		<Version>4.0.3</Version>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>

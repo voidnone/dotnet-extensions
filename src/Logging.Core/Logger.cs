@@ -6,9 +6,9 @@ public class Logger(string name, Func<string, LogLevel, bool>? filter, ILogWrite
 {
     private readonly string name = string.IsNullOrWhiteSpace(name) ? nameof(Logger) : name;
 
-    public IDisposable? BeginScope<TState>(TState state) where TState : notnull
+    public IDisposable BeginScope<TState>(TState state)
     {
-        return null;
+        return NoneDisposable.Instance;
     }
 
     public bool IsEnabled(LogLevel logLevel) => filter?.Invoke(name, logLevel) ?? true;
