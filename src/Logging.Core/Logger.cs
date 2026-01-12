@@ -6,7 +6,7 @@ public class Logger(string name, Func<string, LogLevel, bool>? filter, ILogWrite
 {
     private readonly string name = string.IsNullOrWhiteSpace(name) ? nameof(Logger) : name;
 
-    public IDisposable BeginScope<TState>(TState state)
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull
     {
         return NoneDisposable.Instance;
     }

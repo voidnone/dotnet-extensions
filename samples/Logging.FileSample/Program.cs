@@ -14,7 +14,7 @@ var app = builder.Build();
 
 app.MapGet("/", ([FromServices] ILogger<Program> logger) =>
 {
-    logger.LogError("Logging from file logging perovider");
+   logger.LogError($"Logging from file logging provider"); 
 });
 
 app.Run();
