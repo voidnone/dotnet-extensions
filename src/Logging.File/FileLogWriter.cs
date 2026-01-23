@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using VoidNone.Logging.Core;
 
@@ -22,7 +23,7 @@ public class FileLogWriter : QueueLogWriter
     {
         if (DateTime.UtcNow < nextCleanTime) return;
         nextCleanTime = DateTime.UtcNow.AddDays(1);
-        var files = Directory.GetFiles(directory, "*.log");
+        var files = Directory.GetFiles(directory, "*.log", SearchOption.AllDirectories);
         foreach (var file in files)
         {
             var lastWriteTime = System.IO.File.GetLastWriteTimeUtc(file);
@@ -34,19 +35,19 @@ public class FileLogWriter : QueueLogWriter
     protected override async Task WriteLogAsync(Log log)
     {
         var logBuilder = new StringBuilder();
-        var splitter = $"[{log.Level}] [{log.Name}] [{log.EventId}] [{DateTimeOffset.UtcNow}]";
+        var splitter = $"[{log.Name}] [{log.EventId}] [{DateTimeOffset.UtcNow}]";
         logBuilder.AppendLine(splitter);
         logBuilder.AppendLine(log.Message);
         if (log.Exception != default) logBuilder.AppendLine(log.Exception.ToString());
         logBuilder.AppendLine();
-        var path = GetFilePath(log.CreationTime);
+        var path = GetFilePath(log.Level, log.CreationTime);
         await System.IO.File.AppendAllTextAsync(path, logBuilder.ToString());
     }
 
-    private string GetFilePath(DateTimeOffset creationTime)
+    private string GetFilePath(LogLevel logLevel, DateTimeOffset creationTime)
     {
         var fileName = $"{creationTime.ToString(options.DateFormat)}.log";
-        var path = Path.Combine(this.directory, fileName);
+        var path = Path.Combine(this.directory, logLevel.ToString(), fileName);
         var directory = Path.GetDirectoryName(path);
 
         if (!Directory.Exists(directory))
