@@ -8,17 +8,24 @@ public abstract class QueueLogWriter : ILogWriter
     private static uint writing = 0;
     private Exception? exception;
 
+    protected virtual Action? OnQueueLogWriting { get; }
+
     public void WriteLog(Log log)
     {
         if (exception != null) throw exception;
         queue.Enqueue(log);
-        _ = WriteLogAsync();
+        Task.Run(WriteQueueLogAsync);
     }
 
-    private async Task WriteLogAsync()
+    private async ValueTask WriteQueueLogAsync()
     {
         if (Interlocked.Exchange(ref writing, 1) == 0)
         {
+            if (OnQueueLogWriting != null)
+            {
+                _ = Task.Run(OnQueueLogWriting).ConfigureAwait(false);
+            }
+
             while (queue.TryDequeue(out var log))
             {
                 try
@@ -32,7 +39,7 @@ public abstract class QueueLogWriter : ILogWriter
             }
 
             Interlocked.Exchange(ref writing, 0);
-            if (!queue.IsEmpty) _ = WriteLogAsync();
+            if (!queue.IsEmpty) _ = Task.Run(WriteQueueLogAsync);
         }
     }
 

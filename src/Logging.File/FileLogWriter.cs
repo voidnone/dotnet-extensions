@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using System.Text;
+﻿using System.Text;
+using Microsoft.Extensions.Options;
 using VoidNone.Logging.Core;
 
 namespace VoidNone.Logging.File;
@@ -7,26 +7,28 @@ namespace VoidNone.Logging.File;
 public class FileLogWriter : QueueLogWriter
 {
     private readonly FileLoggerOptions options;
-    private readonly string prefixPath;
+    private readonly string directory;
+    private DateTime nextCleanTime = DateTime.UtcNow;
+
+    protected override Action? OnQueueLogWriting => ClearLogFile;
 
     public FileLogWriter(IOptions<FileLoggerOptions> options)
     {
         this.options = options.Value;
-        prefixPath = Path.Combine(AppContext.BaseDirectory, this.options.Path);
+        directory = Path.Combine(AppContext.BaseDirectory, this.options.Path);
     }
 
-    private string GetFilePath(DateTimeOffset creationTime)
+    private void ClearLogFile()
     {
-        var fileName = $"{creationTime.ToString(options.DateFormat)}.txt";
-        var path = Path.Combine(prefixPath, fileName);
-        var directory = Path.GetDirectoryName(path);
-
-        if (!Directory.Exists(directory))
+        if (DateTime.UtcNow < nextCleanTime) return;
+        nextCleanTime = DateTime.UtcNow.AddDays(1);
+        var files = Directory.GetFiles(directory, "*.log");
+        foreach (var file in files)
         {
-            Directory.CreateDirectory(directory!);
+            var lastWriteTime = System.IO.File.GetLastWriteTimeUtc(file);
+            if (lastWriteTime.AddDays(options.RetentionDays) > DateTime.UtcNow) continue;
+            System.IO.File.Delete(file);
         }
-
-        return path;
     }
 
     protected override async Task WriteLogAsync(Log log)
@@ -39,6 +41,20 @@ public class FileLogWriter : QueueLogWriter
         logBuilder.AppendLine();
         var path = GetFilePath(log.CreationTime);
         await System.IO.File.AppendAllTextAsync(path, logBuilder.ToString());
+    }
+
+    private string GetFilePath(DateTimeOffset creationTime)
+    {
+        var fileName = $"{creationTime.ToString(options.DateFormat)}.log";
+        var path = Path.Combine(this.directory, fileName);
+        var directory = Path.GetDirectoryName(path);
+
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory!);
+        }
+
+        return path;
     }
 }
 
