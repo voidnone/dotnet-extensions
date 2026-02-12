@@ -55,9 +55,9 @@ public static class ServiceCollectionExtensions
         foreach (var typeService in typeServices)
         {
 #if NET8_0_OR_GREATER
-            services.Add(new ServiceDescriptor(typeService, attribute.Key, (s, _) => s.GetRequiredKeyedService(firstService, attribute.Key), attribute.ServiceLifetime));
+            services.Add(new ServiceDescriptor(typeService, attribute.Key, (s, key) => s.GetRequiredKeyedService(firstService, key), attribute.ServiceLifetime));
 #else
-                 services.Add(new ServiceDescriptor(typeService, (s, _) => s.GetRequiredService(firstService), attribute.ServiceLifetime));
+                 services.Add(new ServiceDescriptor(typeService, s => s.GetRequiredService(firstService), attribute.ServiceLifetime));
 #endif
 
         }
