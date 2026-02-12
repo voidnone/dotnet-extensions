@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -21,26 +19,47 @@ public static class ServiceCollectionExtensions
 
         foreach (var type in types)
         {
-            if (type.IsAbstract || type.IsInterface) continue;
-            var attributes = type.GetCustomAttributes<LifetimeAttribute>();
-
-            foreach (var attribute in attributes)
-            {
-                if (attribute == default) continue;
-                var typeServices = attribute.Services.Length == 0 ? new[] { type } : attribute.Services;
-
-                foreach (var typeService in typeServices)
-                {
-#if NET8_0_OR_GREATER
-                    services.Add(new ServiceDescriptor(typeService, attribute.Key, type, attribute.ServiceLifetime));
-#else
-                services.Add(new ServiceDescriptor(typeService, type, attribute.ServiceLifetime));
-#endif
-
-                }
-            }
+            if (type == null || type.IsAbstract || type.IsInterface) continue;
+            AddFromType(services, type);
         }
 
         return services;
+    }
+
+    private static void AddFromType(IServiceCollection services, Type type)
+    {
+        var attributes = type.GetCustomAttributes<LifetimeAttribute>();
+
+        foreach (var attribute in attributes)
+        {
+            if (attribute == default) continue;
+            AddFromAttribute(services, type, attribute);
+        }
+    }
+
+    private static void AddFromAttribute(IServiceCollection services, Type type, LifetimeAttribute attribute)
+    {
+        var typeServices = new Stack<Type>(attribute.Services);
+
+        if (!typeServices.TryPop(out var firstService))
+        {
+            firstService = type;
+        }
+
+#if NET8_0_OR_GREATER
+        services.Add(new ServiceDescriptor(firstService, attribute.Key, type, attribute.ServiceLifetime));
+#else
+                services.Add(new ServiceDescriptor(firstService, type, attribute.ServiceLifetime));
+#endif
+
+        foreach (var typeService in typeServices)
+        {
+#if NET8_0_OR_GREATER
+            services.Add(new ServiceDescriptor(typeService, attribute.Key, (s, _) => s.GetRequiredKeyedService(firstService, attribute.Key), attribute.ServiceLifetime));
+#else
+                 services.Add(new ServiceDescriptor(typeService, (s, _) => s.GetRequiredService(firstService), attribute.ServiceLifetime));
+#endif
+
+        }
     }
 }
