@@ -34,17 +34,20 @@ public static class ServiceCollectionExtensions
     private static void AddFromType(IServiceCollection services, Type type)
     {
         var attributes = type.GetCustomAttributes<LifetimeAttribute>();
+        if (attributes == null) return;
 
-        foreach (var attribute in attributes)
+        var grouped = attributes.Where(w => w != default).GroupBy(g => new { g.ServiceLifetime, g.Key });
+
+        foreach (var group in grouped)
         {
-            if (attribute == default) continue;
-            AddFromAttribute(services, type, attribute);
+            var serviceTypes = group.SelectMany(s => s.Services).Distinct().ToArray();
+            AddServices(services, type, group.Key.ServiceLifetime, group.Key.Key, serviceTypes);
         }
     }
 
-    private static void AddFromAttribute(IServiceCollection services, Type type, LifetimeAttribute attribute)
+    private static void AddServices(IServiceCollection services, Type type, ServiceLifetime lifetime, object? key, Type[] types)
     {
-        var typeServices = new Stack<Type>(attribute.Services);
+        var typeServices = new Stack<Type>(SortTypeByAssignable(types));
 
         if (!typeServices.TryPop(out var firstService))
         {
@@ -52,19 +55,40 @@ public static class ServiceCollectionExtensions
         }
 
 #if NET8_0_OR_GREATER
-        services.Add(new ServiceDescriptor(firstService, attribute.Key, type, attribute.ServiceLifetime));
+        services.Add(new ServiceDescriptor(firstService, key, type, lifetime));
 #else
-                services.Add(new ServiceDescriptor(firstService, type, attribute.ServiceLifetime));
+        services.Add(new ServiceDescriptor(firstService, type, lifetime));
 #endif
 
         foreach (var typeService in typeServices)
         {
 #if NET8_0_OR_GREATER
-            services.Add(new ServiceDescriptor(typeService, attribute.Key, (s, key) => s.GetRequiredKeyedService(firstService, key), attribute.ServiceLifetime));
+            services.Add(new ServiceDescriptor(typeService, key, (s, k) => s.GetRequiredKeyedService(firstService, k), lifetime));
 #else
-                 services.Add(new ServiceDescriptor(typeService, s => s.GetRequiredService(firstService), attribute.ServiceLifetime));
+            services.Add(new ServiceDescriptor(typeService, s => s.GetRequiredService(firstService), lifetime));
 #endif
 
         }
+    }
+
+    internal static IEnumerable<Type> SortTypeByAssignable(Type[] types)
+    {
+        if (types.Length < 2) return types;
+        var result = new List<Type>();
+
+        foreach (var type in types)
+        {
+            var lastAssignableFrom = result.LastOrDefault(t => t.IsAssignableFrom(type));
+            if (lastAssignableFrom == null)
+            {
+                result.Add(type);
+            }
+            else
+            {
+                result.Insert(result.IndexOf(lastAssignableFrom), type);
+            }
+        }
+
+        return result;
     }
 }
