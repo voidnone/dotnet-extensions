@@ -2,7 +2,7 @@
 	<Import Project="../../common.props" />
 
 	<PropertyGroup>
-		<Version>4.1.0</Version>
+		<Version>4.1.1</Version>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
@@ -15,5 +15,4 @@
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
-
 </Project>
