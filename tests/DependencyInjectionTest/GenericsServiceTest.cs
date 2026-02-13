@@ -23,7 +23,7 @@ namespace DependencyInjectionTest
         IServiceProvider _services = new ServiceCollection().AddFromAssemblies(Assembly.GetExecutingAssembly()).BuildServiceProvider();
 
         [TestMethod]
-        public void Has_Interface_Service_Test()
+        public void Has_Interface_Service()
         {
             var service = _services.GetService<IService<DateTime>>();
             var service2 = _services.GetService<IMyService>();

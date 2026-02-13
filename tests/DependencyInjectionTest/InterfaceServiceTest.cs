@@ -29,7 +29,7 @@ namespace DependencyInjectionTest
         IServiceProvider _services = new ServiceCollection().AddFromAssemblies(Assembly.GetExecutingAssembly()).BuildServiceProvider();
 
         [TestMethod]
-        public void Has_Interface_Service_Test()
+        public void Has_Interface_Service()
         {
             var service = _services.GetService<IService>();
             var service2 = _services.GetService<IService2>();
@@ -38,7 +38,7 @@ namespace DependencyInjectionTest
         }
 
         [TestMethod]
-        public void Generic_Interface_Service_Test()
+        public void Generic_Interface_Service()
         {
             var service = _services.GetService<IService3>();
             var service2 = _services.GetService<IService4>();
@@ -51,7 +51,7 @@ namespace DependencyInjectionTest
         }
 
         [TestMethod]
-        public void Not_Class_Service_Test()
+        public void Not_Class_Service()
         {
             var service = _services.GetService<Service>();
             Assert.IsNull(service);

@@ -26,7 +26,7 @@ public class BasicServiceTest
     IServiceProvider _services = new ServiceCollection().AddFromAssemblies(Assembly.GetExecutingAssembly()).BuildServiceProvider();
 
     [TestMethod]
-    public void LifetimeAttributeTest()
+    public void LifetimeAttribute()
     {
         var service = _services.GetService<LifetimeService>();
         Assert.IsNotNull(service);
@@ -44,7 +44,7 @@ public class BasicServiceTest
     }
 
     [TestMethod]
-    public void TransientAttributeTest()
+    public void TransientAttribute()
     {
         var service = _services.GetService<TransientService>();
         var service2 = _services.GetService<TransientService>();
@@ -54,7 +54,7 @@ public class BasicServiceTest
     }
 
     [TestMethod]
-    public void ScopedAttributeTest()
+    public void ScopedAttribute()
     {
         var service = _services.GetService<ScopedService>();
         var service2 = _services.GetService<ScopedService>();
@@ -64,7 +64,7 @@ public class BasicServiceTest
     }
 
     [TestMethod]
-    public void SingletonAttributeTest()
+    public void SingletonAttribute()
     {
         var service = _services.GetService<SingletonService>();
         var service2 = _services.GetService<SingletonService>();

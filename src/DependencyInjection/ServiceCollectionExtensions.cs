@@ -23,6 +23,11 @@ public static class ServiceCollectionExtensions
             AddFromType(services, type);
         }
 
+        if (services.All(a => a.ServiceType != typeof(IServiceCollection)))
+        {
+            services.AddSingleton(services);
+        }
+
         return services;
     }
 

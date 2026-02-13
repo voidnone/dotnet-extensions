@@ -19,7 +19,7 @@ namespace DependencyInjectionTest
         IServiceProvider _services = new ServiceCollection().AddFromAssemblies(Assembly.GetExecutingAssembly()).BuildServiceProvider();
 
         [TestMethod]
-        public void Class_Test()
+        public void Class()
         {
             var service = _services.GetService<Service>();
             var baseService = _services.GetService<BaseService>();
@@ -29,7 +29,7 @@ namespace DependencyInjectionTest
         }
 
         [TestMethod]
-        public void Interface_Test()
+        public void Interface()
         {
             var service = _services.GetService<IService>();
             var baseService = _services.GetService<IBaseService>();

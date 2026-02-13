@@ -20,7 +20,7 @@ public class ShareInstanceTest
     IServiceProvider _services = new ServiceCollection().AddFromAssemblies(Assembly.GetExecutingAssembly()).BuildServiceProvider();
 
     [TestMethod]
-    public void LifetimeAttributeTest()
+    public void LifetimeAttribute()
     {
         var service1 = _services.GetService<IService1>();
         var service2 = _services.GetService<IService2>();
