@@ -1,4 +1,3 @@
-#if NET8_0_OR_GREATER
 using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Http;
 
@@ -19,12 +18,14 @@ public static class ServiceProviderExtensions
             foreach (var item in serviceCollection)
             {
                 if (item.ServiceType != typeof(T)) continue;
-
+#if NET8_0_OR_GREATER
                 if (item.IsKeyedService && item.KeyedImplementationType != null)
                 {
                     list.Add(item.KeyedImplementationType);
                 }
-                else if (item.ImplementationType != null)
+                else 
+#endif
+                if (item.ImplementationType != null)
                 {
                     list.Add(item.ImplementationType);
                 }
@@ -33,7 +34,8 @@ public static class ServiceProviderExtensions
             return list;
         });
     }
-
+    
+#if NET8_0_OR_GREATER
     public static IEnumerable<T> GetAllServices<T>(this IServiceProvider serviceProvider)
     {
         var result = serviceInstances.GetOrAdd(typeof(T), type =>
@@ -63,6 +65,7 @@ public static class ServiceProviderExtensions
 
         return result ?? [];
     }
+#endif
 
     public static IServiceProvider GetHttpScope(this IServiceProvider serviceProvider)
     {
@@ -71,5 +74,3 @@ public static class ServiceProviderExtensions
         return httpContextAccessor.HttpContext.RequestServices;
     }
 }
-
-#endif
