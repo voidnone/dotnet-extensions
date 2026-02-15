@@ -21,6 +21,7 @@ namespace VoidNone.Logging.Core
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             if (loggerWriter is IDisposable disposable)
             {
                 disposable.Dispose();
