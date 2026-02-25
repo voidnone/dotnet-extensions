@@ -1,10 +1,7 @@
-using System;
-using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DependencyInjectionTest;
+namespace VoidNone.DependencyInjectionTest;
 
 [TestClass]
 public class ServiceProviderExtensionsTest
@@ -19,7 +16,7 @@ public class ServiceProviderExtensionsTest
 
     [Singleton<IService>("key2")]
     class Service2 : IService { }
-
+    
     IServiceProvider _services = new ServiceCollection().AddFromAssemblies(Assembly.GetExecutingAssembly()).BuildServiceProvider();
 
     [TestMethod]

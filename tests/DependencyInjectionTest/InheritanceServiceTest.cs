@@ -1,42 +1,39 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Reflection;
+﻿using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace DependencyInjectionTest
+namespace VoidNone.DependencyInjectionTest;
+
+[TestClass]
+public class InheritanceServiceTest
 {
-    [TestClass]
-    public class InheritanceServiceTest
+    [Transient(typeof(IBaseService))]
+    class Service : BaseService, IService { };
+
+    [Transient]
+    class BaseService { };
+    interface IService : IBaseService { };
+    interface IBaseService { };
+
+    IServiceProvider _services = new ServiceCollection().AddFromAssemblies(Assembly.GetExecutingAssembly()).BuildServiceProvider();
+
+    [TestMethod]
+    public void Class()
     {
-        [Transient(typeof(IBaseService))]
-        class Service : BaseService, IService { };
+        var service = _services.GetService<Service>();
+        var baseService = _services.GetService<BaseService>();
 
-        [Transient]
-        class BaseService { };
-        interface IService : IBaseService { };
-        interface IBaseService { };
+        Assert.IsNull(service);
+        Assert.IsNotNull(baseService);
+    }
 
-        IServiceProvider _services = new ServiceCollection().AddFromAssemblies(Assembly.GetExecutingAssembly()).BuildServiceProvider();
+    [TestMethod]
+    public void Interface()
+    {
+        var service = _services.GetService<IService>();
+        var baseService = _services.GetService<IBaseService>();
 
-        [TestMethod]
-        public void Class()
-        {
-            var service = _services.GetService<Service>();
-            var baseService = _services.GetService<BaseService>();
-
-            Assert.IsNull(service);
-            Assert.IsNotNull(baseService);
-        }
-
-        [TestMethod]
-        public void Interface()
-        {
-            var service = _services.GetService<IService>();
-            var baseService = _services.GetService<IBaseService>();
-
-            Assert.IsNull(service);
-            Assert.IsNotNull(baseService);
-            Assert.IsInstanceOfType(baseService, typeof(Service));
-        }
+        Assert.IsNull(service);
+        Assert.IsNotNull(baseService);
+        Assert.IsInstanceOfType(baseService, typeof(Service));
     }
 }

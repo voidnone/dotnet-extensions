@@ -1,9 +1,7 @@
-using System;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DependencyInjectionTest;
+namespace VoidNone.DependencyInjectionTest;
 
 [TestClass]
 public class ShareInstanceTest

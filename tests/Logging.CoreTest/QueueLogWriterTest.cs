@@ -1,6 +1,6 @@
 using VoidNone.Logging.Core;
 
-namespace Logging.CoreTest;
+namespace VoidNone.Logging.CoreTest;
 
 [TestClass]
 public class QueueLogWriterTest

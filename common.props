@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <NoWarn>$(NoWarn);1591;IDE0130;</NoWarn>
+        <NoWarn>$(NoWarn);1591;</NoWarn>
         <Authors>huanent</Authors>
         <AssemblyName>VoidNone.$(MSBuildProjectName)</AssemblyName>
         <RootNamespace>VoidNone.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
