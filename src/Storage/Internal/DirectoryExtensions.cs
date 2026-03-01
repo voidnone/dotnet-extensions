@@ -1,4 +1,4 @@
-namespace VoidNone.Vone.Core.Extensions;
+namespace VoidNone.Storage.Internal;
 
 public static class DirectoryExtensions
 {

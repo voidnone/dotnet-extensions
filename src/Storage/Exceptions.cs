@@ -19,3 +19,8 @@ public class FileExistException : Exception
 {
 
 }
+
+public class DataCanNotBeNullException : Exception
+{
+
+}
