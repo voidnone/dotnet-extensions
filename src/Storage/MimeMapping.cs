@@ -1,9 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.VisualBasic;
 
-namespace VoidNone.Storage.Internal;
+namespace VoidNone.Storage;
 
-public class MimeMapping
+public static class MimeMapping
 {
     private static readonly Dictionary<string, string> mapping = new()
     {
@@ -391,8 +390,25 @@ public class MimeMapping
         { ".zip", "application/x-zip-compressed" },
     };
 
-    internal static bool TryGetContentType(string extension, [MaybeNull] out string contentType)
+    private static readonly Lazy<Dictionary<string, string>> reversedMapping = new(() =>
     {
-        return mapping.TryGetValue(extension, out contentType);
+        var result = new Dictionary<string, string>();
+
+        foreach (var item in mapping)
+        {
+            result.TryAdd(item.Value, item.Key);
+        }
+
+        return result;
+    }, true);
+
+    public static bool TryGetContentType(string fileExtension, [MaybeNull] out string contentType)
+    {
+        return mapping.TryGetValue(fileExtension, out contentType);
+    }
+
+    public static bool TryGetFileExtension(string contentType, [MaybeNull] out string fileExtension)
+    {
+        return reversedMapping.Value.TryGetValue(contentType, out fileExtension);
     }
 }

@@ -1,5 +1,3 @@
-using VoidNone.Storage.Internal;
-
 namespace VoidNone.Storage;
 
 public class FileEntry : Entry
