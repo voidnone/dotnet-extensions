@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using Microsoft.AspNetCore.Http;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -34,7 +33,7 @@ public static class ServiceProviderExtensions
             return list;
         });
     }
-    
+
 #if NET8_0_OR_GREATER
     public static IEnumerable<T> GetAllServices<T>(this IServiceProvider serviceProvider)
     {
@@ -66,11 +65,4 @@ public static class ServiceProviderExtensions
         return result ?? [];
     }
 #endif
-
-    public static IServiceProvider GetHttpScope(this IServiceProvider serviceProvider)
-    {
-        var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
-        if (httpContextAccessor?.HttpContext == null) throw new HttpScopeNotAvailableException();
-        return httpContextAccessor.HttpContext.RequestServices;
-    }
 }

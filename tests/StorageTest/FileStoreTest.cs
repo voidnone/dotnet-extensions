@@ -6,7 +6,7 @@ namespace VoidNone.StorageTest;
 public class FileStoreTest
 {
     [TestMethod]
-    public void WriteLog()
+    public void CreateDirectory()
     {
         var store = new FileStore("testStore");
         var path = store.CreateDirectory("testDirectory");

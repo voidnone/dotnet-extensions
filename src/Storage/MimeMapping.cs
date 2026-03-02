@@ -4,7 +4,7 @@ namespace VoidNone.Storage;
 
 public static class MimeMapping
 {
-    private static readonly Dictionary<string, string> mapping = new()
+    private static readonly Dictionary<string, string> mapping = new(StringComparer.OrdinalIgnoreCase)
     {
         { ".323", "text/h323" },
         { ".3g2", "video/3gpp2" },
@@ -392,7 +392,7 @@ public static class MimeMapping
 
     private static readonly Lazy<Dictionary<string, string>> reversedMapping = new(() =>
     {
-        var result = new Dictionary<string, string>();
+        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         foreach (var item in mapping)
         {
@@ -402,9 +402,23 @@ public static class MimeMapping
         return result;
     }, true);
 
-    public static bool TryGetContentType(string fileExtension, [MaybeNull] out string contentType)
+    public static bool TryGetContentType(string path, [MaybeNull] out string contentType)
     {
-        return mapping.TryGetValue(fileExtension, out contentType);
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            contentType = null;
+            return false;
+        }
+
+        var lastDotIndex = path.LastIndexOf('.');
+
+        if (lastDotIndex == -1)
+        {
+            contentType = null;
+            return false;
+        }
+
+        return mapping.TryGetValue(path[lastDotIndex..], out contentType);
     }
 
     public static bool TryGetFileExtension(string contentType, [MaybeNull] out string fileExtension)

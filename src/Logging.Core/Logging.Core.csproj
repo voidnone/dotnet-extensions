@@ -2,7 +2,7 @@
 	<Import Project="../../common.props" />
 	
 	<PropertyGroup>
-		<Version>1.2.0</Version>
+		<Version>1.2.1</Version>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
@@ -13,6 +13,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
 	</ItemGroup>
 </Project>
