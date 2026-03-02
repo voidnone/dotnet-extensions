@@ -16,7 +16,7 @@ public class QueueLogWriterTest
     }
 
     [TestMethod]
-    public Task WriteLogAsync()
+    public async Task WriteLogAsync()
     {
         var customQueueLogWriter = new CustomQueueLogWriter();
 
@@ -25,8 +25,8 @@ public class QueueLogWriterTest
             customQueueLogWriter.WriteLog(new Log(Microsoft.Extensions.Logging.LogLevel.Error, string.Empty, new Microsoft.Extensions.Logging.EventId(index), string.Empty, null));
         });
 
-        Assert.HasCount(1000, customQueueLogWriter.Logs);
+        await Task.Delay(100);
 
-        return Task.CompletedTask;
+        Assert.HasCount(1000, customQueueLogWriter.Logs);
     }
 }

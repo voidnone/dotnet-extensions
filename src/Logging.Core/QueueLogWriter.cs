@@ -5,7 +5,7 @@ namespace VoidNone.Logging.Core;
 public abstract class QueueLogWriter : ILogWriter
 {
     private readonly static ConcurrentQueue<Log> queue = new();
-    private static uint writing = 0;
+    private static long writing = 0;
     private Exception? exception;
 
     protected virtual Action? OnQueueLogWriting { get; }
@@ -14,6 +14,7 @@ public abstract class QueueLogWriter : ILogWriter
     {
         if (exception != null) throw exception;
         queue.Enqueue(log);
+        if (Interlocked.Read(ref writing) == 1) return;
         Task.Run(WriteQueueLogAsync);
     }
 
