@@ -5,64 +5,71 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class ServiceProviderExtensions
 {
     private static readonly ConcurrentDictionary<Type, IEnumerable<Type>> serviceTypes = [];
-    private static readonly ConcurrentDictionary<Type, object> serviceInstances = [];
+    private static readonly ConcurrentDictionary<Type, IEnumerable<object>> serviceInstances = [];
 
-    public static IEnumerable<Type> GetAllServiceTypes<T>(this IServiceProvider serviceProvider)
+    public static Type[] GetAllServiceTypes<T>(this IServiceProvider serviceProvider) => GetAllServiceTypes(serviceProvider, typeof(T));
+
+    public static Type[] GetAllServiceTypes(this IServiceProvider serviceProvider, Type serviceType)
     {
-        return serviceTypes.GetOrAdd(typeof(T), type =>
+        IEnumerable<Type> GetAllServiceTypes(Type type)
         {
             var serviceCollection = serviceProvider.GetRequiredService<IServiceCollection>();
-            var list = new List<Type>();
 
             foreach (var item in serviceCollection)
             {
-                if (item.ServiceType != typeof(T)) continue;
+                if (item.ServiceType != serviceType) continue;
 #if NET8_0_OR_GREATER
                 if (item.IsKeyedService && item.KeyedImplementationType != null)
                 {
-                    list.Add(item.KeyedImplementationType);
+                    yield return item.KeyedImplementationType;
                 }
-                else 
+                else
 #endif
-                if (item.ImplementationType != null)
-                {
-                    list.Add(item.ImplementationType);
-                }
+                    if (item.ImplementationType != null)
+                    {
+                        yield return item.ImplementationType;
+                    }
             }
+        }
 
-            return list;
-        });
+        return [.. serviceTypes.GetOrAdd(serviceType, GetAllServiceTypes)];
     }
 
 #if NET8_0_OR_GREATER
-    public static IEnumerable<T> GetAllServices<T>(this IServiceProvider serviceProvider)
+
+    public static T[] GetAllServices<T>(this IServiceProvider serviceProvider) => [.. GetAllServices(serviceProvider, typeof(T)).Select(s => (T)s)];
+
+    public static object[] GetAllServices(this IServiceProvider serviceProvider, Type serviceType)
     {
-        var result = serviceInstances.GetOrAdd(typeof(T), type =>
+        IEnumerable<object> GetAllServices(Type type)
         {
             var serviceCollection = serviceProvider.GetRequiredService<IServiceCollection>();
-            var list = new List<T>();
             var keys = new HashSet<object>();
 
             foreach (var item in serviceCollection)
             {
-                if (item.ServiceType != typeof(T)) continue;
+                if (item.ServiceType != type) continue;
                 if (item.IsKeyedService && item.ServiceKey != null)
                 {
                     keys.Add(item.ServiceKey);
                 }
             }
 
-            list.AddRange(serviceProvider.GetServices<T>());
-
-            foreach (var item in keys)
+            foreach (var item in serviceProvider.GetServices(type))
             {
-                list.AddRange(serviceProvider.GetKeyedServices<T>(item));
+                if (item != null) yield return item;
             }
 
-            return list;
-        }) as IEnumerable<T>;
+            foreach (var key in keys)
+            {
+                foreach (var item in serviceProvider.GetKeyedServices(type, key))
+                {
+                    if (item != null) yield return item;
+                }
+            }
+        }
 
-        return result ?? [];
+        return [.. serviceInstances.GetOrAdd(serviceType, GetAllServices)];
     }
 #endif
 }

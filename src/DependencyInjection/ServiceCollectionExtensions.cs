@@ -53,23 +53,26 @@ public static class ServiceCollectionExtensions
         }
     }
 
-    private static void AddServices(IServiceCollection services, Type type, ServiceLifetime lifetime, object? key, Type[] types)
+    private static void AddServices(IServiceCollection services, Type implementationType, ServiceLifetime lifetime, object? key, Type[] serviceTypes)
     {
-        var firstService = types.Length == 0 ? type : types[0];
-
-#if NET8_0_OR_GREATER
-        services.Add(new ServiceDescriptor(firstService, key, type, lifetime));
-#else
-        services.Add(new ServiceDescriptor(firstService, type, lifetime));
-#endif
-
-        foreach (var typeService in types.Skip(1))
+        if (serviceTypes.Length == 0)
         {
 #if NET8_0_OR_GREATER
-            services.Add(new ServiceDescriptor(typeService, key, (s, k) => s.GetRequiredKeyedService(firstService, k), lifetime));
+            services.Add(new ServiceDescriptor(implementationType, key, implementationType, lifetime));
 #else
-            services.Add(new ServiceDescriptor(typeService, s => s.GetRequiredService(firstService), lifetime));
+            services.Add(new ServiceDescriptor(implementationType, implementationType, lifetime));
 #endif
+        }
+        else
+        {
+            foreach (var typeService in serviceTypes)
+            {
+#if NET8_0_OR_GREATER
+            services.Add(new ServiceDescriptor(typeService, key, implementationType, lifetime));
+#else
+                services.Add(new ServiceDescriptor(typeService, s => implementationType, lifetime));
+#endif
+            }
         }
     }
 }
