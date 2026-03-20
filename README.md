@@ -1,11 +1,45 @@
-# VoidNone Dotnet Extensions
+# VoidNone.Logging
 
-A lightweight collection of .NET extension libraries.
+## Install
 
-## Packages
+[![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.Core?label=nuget&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.Core/)
 
-| Name | Package | Description |
-| --- | --- | --- |
-| [VoidNone.DependencyInjection](./src/DependencyInjection/README.md) | [![Nuget](https://img.shields.io/nuget/v/VoidNone.DependencyInjection?label=nuget&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.DependencyInjection/) | Attribute-driven service registration and resolution helpers. Provides attributes to declare service lifetimes (Singleton, Scoped, Transient) and automates registration via assembly scanning. Ideal for projects that prefer convention and attribute-based registration. |
-| [VoidNone.Logging.Core](./src/Logging.Core/README.md) | [![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.Core?label=nuget&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.Core/) | Core logging abstractions and interfaces, including `ILogger`/`ILogWriter`-style contracts and factories.|
-| [VoidNone.Logging.File](./src/Logging.File/README.md) | [![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.File?label=nuget&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.File/) | File-based logging implementation and factory extensions. 
+[![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.File?label=nuget&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.File/)
+
+
+
+## VoidNone.Logging.Core
+
+```
+public class CustomLogWriter : ILogWriter
+{
+    public void WriteLog(Log log)
+    {
+        Console.WriteLine($"{log.Level} {log.Message} {log.Name} {log.Exception} {log.EventId}");
+    }
+}
+
+//ILoggingBuilder
+logging.AddImplementation<CustomLogWriter>();
+```
+
+## VoidNone.Logging.File
+
+```
+//ILoggingBuilder
+logging.AddFile();
+```
+Log will out in {application folder}/logs/20211020.txt
+```
+[Error] [LoggingFileSample.Worker] [0] [2021/10/20 01:05:35 +00:00]
+Worker running at: 10/20/2021 21:05:35 +08:00
+System.Exception: error
+
+[Error] [LoggingFileSample.Worker] [0] [2021/10/20 01:05:36 +00:00]
+Worker running at: 10/20/2021 21:05:36 +08:00
+System.Exception: error
+
+[Error] [LoggingFileSample.Worker] [0] [2021/10/20 01:05:37 +00:00]
+Worker running at: 10/20/2021 21:05:37 +08:00
+System.Exception: error
+```

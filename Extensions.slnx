@@ -4,14 +4,10 @@
     <Project Path="samples/Logging.FileSample/Logging.FileSample.csproj" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/DependencyInjection/DependencyInjection.csproj" />
-    <Project Path="src/Storage/Storage.csproj" />
     <Project Path="src/Logging.Core/Logging.Core.csproj" />
     <Project Path="src/Logging.File/Logging.File.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/DependencyInjectionTest/DependencyInjectionTest.csproj" />
     <Project Path="tests/Logging.CoreTest/Logging.CoreTest.csproj" />
-    <Project Path="tests/StorageTest/StorageTest.csproj" />
   </Folder>
 </Solution>

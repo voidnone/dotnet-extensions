@@ -10,8 +10,8 @@
         <AssemblyName>VoidNone.$(MSBuildProjectName)</AssemblyName>
         <RootNamespace>VoidNone.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
         <RepositoryType>git</RepositoryType>
-        <PackageProjectUrl>https://github.com/voidnone/dotnet-extensions</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/voidnone/dotnet-extensions.git</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/voidnone/logging</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/voidnone/logging.git</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 </Project>
