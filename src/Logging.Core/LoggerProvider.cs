@@ -3,12 +3,13 @@
 namespace VoidNone.Logging.Core
 {
     [ProviderAlias("Implementation")]
-    public class LoggerProvider(ILogWriter loggerWriter) : ILoggerProvider
+    public class LoggerProvider<TLogWriter>(TLogWriter loggerWriter) : ILoggerProvider
+        where TLogWriter : class, ILogWriter
     {
         private readonly Func<string, LogLevel, bool>? filter;
-        private readonly ILogWriter loggerWriter = loggerWriter;
+        private readonly TLogWriter loggerWriter = loggerWriter;
 
-        public LoggerProvider(Func<string, LogLevel, bool>? filter, ILogWriter loggerWriter)
+        public LoggerProvider(Func<string, LogLevel, bool>? filter, TLogWriter loggerWriter)
             : this(loggerWriter)
         {
             this.filter = filter;

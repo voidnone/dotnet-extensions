@@ -22,6 +22,8 @@ public class FileLogWriter : QueueLogWriter
     private void ClearLogFile()
     {
         if (DateTime.UtcNow < nextCleanTime) return;
+        if (!Directory.Exists(directory)) return;
+
         nextCleanTime = DateTime.UtcNow.AddDays(1);
         var files = Directory.GetFiles(directory, "*.log", SearchOption.AllDirectories);
         foreach (var file in files)
@@ -35,7 +37,7 @@ public class FileLogWriter : QueueLogWriter
     protected override async Task WriteLogAsync(Log log)
     {
         var logBuilder = new StringBuilder();
-        var splitter = $"[{log.Name}] [{log.EventId}] [{DateTimeOffset.UtcNow}]";
+        var splitter = $"[{log.Level}] [{log.Name}] [{log.EventId}] [{log.CreationTime:yyyy/MM/dd HH:mm:ss zzz}]";
         logBuilder.AppendLine(splitter);
         logBuilder.AppendLine(log.Message);
         if (log.Exception != default) logBuilder.AppendLine(log.Exception.ToString());
@@ -58,4 +60,3 @@ public class FileLogWriter : QueueLogWriter
         return path;
     }
 }
-

@@ -24,9 +24,8 @@ public class Logger(string name, Func<string, LogLevel, bool>? filter, ILogWrite
         if (!IsEnabled(logLevel)) return;
         ArgumentNullException.ThrowIfNull(formatter);
         string message = formatter(state, exception);
-        if (string.IsNullOrEmpty(message)) return;
+        if (string.IsNullOrEmpty(message) && exception is null) return;
         var log = new Log(logLevel, name, eventId, message, exception);
         loggerWriter.WriteLog(log);
     }
 }
-

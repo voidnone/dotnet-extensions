@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/Logging.Core/Logging.Core.csproj" />
+    <ProjectReference Include="../../src/Logging.File/Logging.File.csproj" />
   </ItemGroup>
 
   <ItemGroup>

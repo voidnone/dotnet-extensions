@@ -11,9 +11,8 @@ public static class FileLoggerFactoryExtensions
     {
         builder.Services.AddOptions<FileLoggerOptions>();
         if (options != default) builder.Services.Configure(options);
-        builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<ILogWriter, FileLogWriter>());
+        builder.Services.TryAddSingleton<FileLogWriter>();
         builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, FileLoggerProvider>());
         return builder;
     }
 }
-
