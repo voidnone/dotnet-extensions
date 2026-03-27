@@ -9,9 +9,8 @@ This repository currently contains two packages:
 
 ## Install
 
-[![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.Core?label=nuget&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.Core/)
-
-[![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.File?label=nuget&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.File/)
+[![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.Core?label=core&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.Core/)
+[![Nuget](https://img.shields.io/nuget/v/VoidNone.Logging.File?label=file&style=for-the-badge)](https://www.nuget.org/packages/VoidNone.Logging.File/)
 
 ```bash
 dotnet add package VoidNone.Logging.Core
